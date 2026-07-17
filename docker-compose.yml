@@ -1,0 +1,108 @@
+services:
+  crdb-node1:
+    image: cockroachdb/cockroach:v24.3.0
+    container_name: crdb-node1
+    hostname: crdb-node1
+    command:
+      - start
+      - --insecure
+      - --advertise-addr=crdb-node1:26357
+      - --listen-addr=crdb-node1:26357
+      - --sql-addr=crdb-node1:26257
+      - --http-addr=crdb-node1:8080
+      - --join=crdb-node1:26357,crdb-node2:26357,crdb-node3:26357
+      - --cache=.25
+      - --max-sql-memory=.25
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - crdb-node1-data:/cockroach/cockroach-data
+    networks:
+      - roach-net
+    mem_limit: 512m
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "cockroach node status --insecure --host=crdb-node1:26357 || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  crdb-node2:
+    image: cockroachdb/cockroach:v24.3.0
+    container_name: crdb-node2
+    hostname: crdb-node2
+    command:
+      - start
+      - --insecure
+      - --advertise-addr=crdb-node2:26357
+      - --listen-addr=crdb-node2:26357
+      - --sql-addr=crdb-node2:26258
+      - --http-addr=crdb-node2:8081
+      - --join=crdb-node1:26357,crdb-node2:26357,crdb-node3:26357
+      - --cache=.25
+      - --max-sql-memory=.25
+    ports:
+      - "26258:26258"
+      - "8081:8081"
+    volumes:
+      - crdb-node2-data:/cockroach/cockroach-data
+    networks:
+      - roach-net
+    mem_limit: 512m
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "cockroach node status --insecure --host=crdb-node2:26357 || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  crdb-node3:
+    image: cockroachdb/cockroach:v24.3.0
+    container_name: crdb-node3
+    hostname: crdb-node3
+    command:
+      - start
+      - --insecure
+      - --advertise-addr=crdb-node3:26357
+      - --listen-addr=crdb-node3:26357
+      - --sql-addr=crdb-node3:26259
+      - --http-addr=crdb-node3:8082
+      - --join=crdb-node1:26357,crdb-node2:26357,crdb-node3:26357
+      - --cache=.25
+      - --max-sql-memory=.25
+    ports:
+      - "26259:26259"
+      - "8082:8082"
+    volumes:
+      - crdb-node3-data:/cockroach/cockroach-data
+    networks:
+      - roach-net
+    mem_limit: 512m
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "cockroach node status --insecure --host=crdb-node3:26357 || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+networks:
+  roach-net:
+    driver: bridge
+
+volumes:
+  crdb-node1-data:
+  crdb-node2-data:
+  crdb-node3-data:
