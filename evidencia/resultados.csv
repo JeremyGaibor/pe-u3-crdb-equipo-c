@@ -1,6 +1,6 @@
 consulta,tiempo_cluster_ms,tiempo_nodo_unico_ms,factor_mejora,interpretacion
-Q1_JOIN,3.2,,,Pendiente de comparación
-Q2_GROUP_BY,29.0,,,Pendiente de comparación
-Q3_CLAVE_PRIMARIA,0.504,,,Pendiente de comparación
-Q4_RANGO,23.2,,,Pendiente de comparación
-Q5_SUBCONSULTA,17.0,,,Pendiente de comparación
+Q1_JOIN,6.8,,,Pendiente de comparación
+Q2_GROUP_BY,12.2,,,Pendiente de comparación
+Q3_CLAVE_PRIMARIA,1.4,,,Pendiente de comparación
+Q4_RANGO,12.8,,,Pendiente de comparación
+Q5_SUBCONSULTA,15.0,,,Pendiente de comparación
