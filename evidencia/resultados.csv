@@ -1,6 +1,6 @@
 consulta,tiempo_cluster_ms,tiempo_nodo_unico_ms,factor_mejora,interpretacion
-Q1_JOIN,6.8,,,Pendiente de comparación
-Q2_GROUP_BY,12.2,,,Pendiente de comparación
-Q3_CLAVE_PRIMARIA,1.4,,,Pendiente de comparación
-Q4_RANGO,12.8,,,Pendiente de comparación
-Q5_SUBCONSULTA,15.0,,,Pendiente de comparación
+Q1_JOIN,6.8,5.4,0.794,El nodo único presentó menor tiempo promedio
+Q2_GROUP_BY,12.2,12.0,0.984,El nodo único presentó menor tiempo promedio
+Q3_CLAVE_PRIMARIA,1.4,0.449,0.321,El nodo único presentó menor tiempo promedio
+Q4_RANGO,12.8,14.4,1.125,El clúster presentó menor tiempo promedio
+Q5_SUBCONSULTA,15.0,22.8,1.52,El clúster presentó menor tiempo promedio

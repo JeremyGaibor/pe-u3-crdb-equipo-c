@@ -1,4 +1,5 @@
 import random
+import argparse
 from datetime import datetime, timedelta
 from decimal import Decimal
 
@@ -12,13 +13,19 @@ Faker.seed(42)
 
 fake = Faker("es_ES")
 
-CONEXION = {
-    "host": "localhost",
-    "port": 26257,
-    "database": "tiendatech",
-    "user": "root",
-    "sslmode": "disable",
-}
+def obtener_argumentos():
+    parser = argparse.ArgumentParser(
+        description="Carga de datos para TiendaTech"
+    )
+
+    parser.add_argument(
+        "--puerto",
+        type=int,
+        default=26257,
+        help="Puerto SQL de CockroachDB",
+    )
+
+    return parser.parse_args()
 
 TOTAL_CLIENTES = 1_000
 TOTAL_PRODUCTOS = 500
@@ -152,7 +159,15 @@ def insertar_datos():
     conexion = None
 
     try:
-        conexion = psycopg2.connect(**CONEXION)
+        argumentos = obtener_argumentos()
+        conexion = psycopg2.connect(
+          host="localhost",
+          port=argumentos.puerto,
+          database="tiendatech",
+          user="root",
+          sslmode="disable",
+        )
+    
         conexion.autocommit = False
 
         with conexion.cursor() as cursor:
